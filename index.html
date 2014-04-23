@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+	<head>
+		<title>D3 Brush Snapping</title>
+		<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+		<style>
+		</style>
+	</head>
+	<body>
+		<div id="brush"></div>
+		<script type="text/javascript">
+			var data = [{"week": 1, stats: {}}, {"week": 2, stats: {}}, {"week": 3, stats: {}}, {"week": 4, stats: {}}]
+			//var data = [{"week": 1, stats: {}}, {"week": 2, stats: {}}, {"week": 3, stats: {}}]
+		
+			var margin = {top: 200, right: 50, bottom: 200, left: 50},
+				height = 500 - margin.left - margin.right,
+				width = 600 - margin.top - margin.bottom;
+				
+			var x = d3.scale.linear()
+				.domain(0, data.length())
+				.range(0, width);
+				
+			var brush = d3.svg.brush()
+				.x(x)
+				.extent(0,0)
+				.on("brush", brushed());
+				
+			var svg = d3.select(".brush").append("svg")
+				.attr("width", width + margin.left + margin.right)
+				.attr("height", height + margin.top + margin.bottom)
+				.append("g")
+				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+				
+			svg.append("g")
+				.attr("class", "x grid")
+				.attr"transform", "translat
+		</script>
+	</body>
+</html>
