@@ -65,9 +65,9 @@ svg.append("g")
       .scale(x)
       .orient("bottom")
 	  .ticks(data.length)
-      .tickFormat(function(d) { return d; })
-      .tickSize(0)
-      .tickPadding(12));
+      .tickFormat(function(d) { return "Week " + d; })
+      .tickSize(5)
+      .tickPadding(35));
 
 var slider = svg.append("g")
     .attr("class", "slider")
@@ -93,15 +93,15 @@ slider
     .call(brush.event);
 */
 function brushed() {
-  var value = brush.extent()[0];
+	var value = brush.extent()[0];
+	//console.log(brush.extent()[0]);
+	if (d3.event.sourceEvent) { // not a programmatic event
+		value = d3.round(x.invert(d3.mouse(this)[0]));
+		brush.extent([value, value]);
+	}
 
-  if (d3.event.sourceEvent) { // not a programmatic event
-    value = x.invert(d3.mouse(this)[0]);
-    brush.extent([value, value]);
-  }
-
-  handle.attr("x", x(value));
-  //d3.select("body").style("background-color", d3.hsl(value, .8, .8));
+	handle.attr("x", x(value));
+	//d3.select("body").style("background-color", d3.hsl(value, .8, .8));
 }
 
 </script>
