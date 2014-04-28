@@ -15,23 +15,16 @@
   stroke-width: 2px;
 }
 
-.axis .halo {
-  fill: none;
-  stroke: #ddd;
-  stroke-width: 8px;
-  stroke-linecap: round;
-}
-
 .slider .handle {
-  fill: #fff;
+  fill: black;
   stroke: #000;
-  stroke-opacity: .5;
   stroke-width: 1.25px;
   pointer-events: none;
 }
 
 </style>
 <body>
+  <p></p>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
 
@@ -49,13 +42,16 @@ var x = d3.scale.linear()
 
 var brush = d3.svg.brush()
     .x(x)
-    .extent([0, 0])
+    .extent([1, 1])
     .on("brush", brushed);
+
+function weekSelect() { d3.select("p").text(brush.extent()[0]); }
+weekSelect();
 
 var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
-  .append("g")
+    .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 svg.append("g")
@@ -64,10 +60,12 @@ svg.append("g")
     .call(d3.svg.axis()
       .scale(x)
       .orient("bottom")
-	  .ticks(data.length)
+	    .ticks(data.length)
       .tickFormat(function(d) { return "Week " + d; })
-      .tickSize(5)
+      .tickSize(10)
       .tickPadding(35));
+
+//svg.selectAll(".tick").select("line").attr("transform", "translate(0,-5)");
 
 var slider = svg.append("g")
     .attr("class", "slider")
@@ -83,15 +81,8 @@ var handle = slider.append("rect")
     .attr("class", "handle")
     .attr("transform", "translate(-10,0)")
     .attr("height", height)
-	.attr("width", 20);
-/*
-slider
-    .call(brush.event)
-  .transition() // gratuitous intro!
-    .duration(750)
-    .call(brush.extent([70, 70]))
-    .call(brush.event);
-*/
+	  .attr("width", 20);
+
 function brushed() {
 	var value = brush.extent()[0];
 	//console.log(brush.extent()[0]);
@@ -101,7 +92,8 @@ function brushed() {
 	}
 
 	handle.attr("x", x(value));
-	//d3.select("body").style("background-color", d3.hsl(value, .8, .8));
+	weekSelect();
+
 }
 
 </script>
