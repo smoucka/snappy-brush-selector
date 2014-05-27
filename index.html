@@ -28,8 +28,8 @@
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
 
-var data = [{"week": 1, stats: {}}, {"week": 2, stats: {}}, {"week": 3, stats: {}}, {"week": 4, stats: {}}];
-//var data = [{"week": 1, stats: {}}, {"week": 2, stats: {}}, {"week": 3, stats: {}}];
+//var data = [{"week": 1, stats: {}}, {"week": 2, stats: {}}, {"week": 3, stats: {}}, {"week": 4, stats: {}}];
+var data = [{"week": 1, stats: {}}, {"week": 2, stats: {}}];
 
 var margin = {top: 225, right: 50, bottom: 225, left: 50},
     width = 960 - margin.left - margin.right,
@@ -54,13 +54,21 @@ var svg = d3.select("body").append("svg")
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+function tickValArray() {
+	var tickVals = [];
+	for (n=0; n<data.length; n++) {
+		tickVals.push(n+1);
+	}
+	return tickVals;
+}
+	
 svg.append("g")
     .attr("class", "x axis")
     .attr("transform", "translate(0," + height / 2 + ")")
     .call(d3.svg.axis()
       .scale(x)
       .orient("bottom")
-	    .ticks(data.length)
+	  .tickValues(tickValArray())
       .tickFormat(function(d) { return "Week " + d; })
       .tickSize(10)
       .tickPadding(35));
